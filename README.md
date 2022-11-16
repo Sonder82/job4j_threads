@@ -4,4 +4,6 @@
 3.Hibernate
 4.Spring
 5.Microservices
+Я студент курса job4j Алексей Новоселов,
+cо мной можно связаться по электронной почте Himrs82@gmail.com
 
