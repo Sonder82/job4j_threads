@@ -3,8 +3,8 @@ package ru.job4j.concurrent;
 public class ConsoleProgress implements Runnable {
     @Override
     public void run() {
+        char[] process = "-\\|/".toCharArray();
         while (!Thread.currentThread().isInterrupted()) {
-            char[] process = "-\\|/".toCharArray();
             for (char symbol : process) {
                 try {
                     System.out.print("\rLoading: " + symbol);
