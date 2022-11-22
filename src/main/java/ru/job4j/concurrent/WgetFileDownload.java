@@ -51,7 +51,8 @@ public class WgetFileDownload implements Runnable {
     /**
      * В методе описывается реализация загрузки содержимого файла в байтах.
      * Выполняется проверка количества скачанных байтов.
-     * При достижении требуемого количества байт, (например при скорости 1мб/с - это 1048576 байт)
+     * При достижении или превышении требуемого количества байт,
+     * (например при скорости 1мб/с - это 1048576 байт)
      * происходит расчет затраченного времени, и сравнивается с секундой.
      * Если времени потребовалось меньше секунды, то нить переводим в режим ожидания.
      * Время режима ожидания будет равно разности времени загрузки к одной секунде.
@@ -66,7 +67,7 @@ public class WgetFileDownload implements Runnable {
             long startTime = currentTime;
             while ((bytesRead = in.read(dataBuffer, 0, 1024)) != -1) {
                 downloadData += bytesRead;
-                if (downloadData == getSpeed()) {
+                if (downloadData >= getSpeed()) {
                     long loadTime = (currentTime - startTime);
                     if (loadTime < ONE_SECOND) {
                         Thread.sleep(ONE_SECOND - loadTime);
@@ -91,7 +92,7 @@ public class WgetFileDownload implements Runnable {
         }
         String digital = args[1];
         if (!digital.chars()
-                .allMatch(Character :: isDigit)) {
+                .allMatch(Character::isDigit)) {
             throw new IllegalArgumentException("Speed of downloads must be digital");
         }
         String pathFile = args[2];
