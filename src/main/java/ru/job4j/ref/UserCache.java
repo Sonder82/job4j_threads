@@ -3,6 +3,7 @@ package ru.job4j.ref;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 
 /**
  * Класс демонстрирует работу по созданию копии общего ресурса(взаимодействие с User).
@@ -21,6 +22,8 @@ public class UserCache {
     }
 
     public List<User> findAll() {
-        return List.copyOf(users.values());
+        return users.values().stream()
+                .map(user -> User.of(user.getName()))
+                .collect(Collectors.toList());
     }
 }
