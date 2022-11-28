@@ -2,6 +2,9 @@ package ru.job4j.io;
 
 import java.io.*;
 
+/**
+ * Класс реализует работу по сохранению данных(контента) в файл.
+ */
 public final class SaveContentFile {
 
     private final File file;

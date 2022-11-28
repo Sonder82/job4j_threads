@@ -3,6 +3,9 @@ package ru.job4j.io;
 import java.io.*;
 import java.util.function.Predicate;
 
+/**
+ * Класс реализует работу по получению данных файла.
+ */
 public final class GetContentFile {
 
     private final File file;
@@ -11,7 +14,17 @@ public final class GetContentFile {
         this.file = file;
     }
 
-    public String content(Predicate<Character> predicate) {
+    /**
+     * Метод выполняет чтение файла.
+     * В зависимости от предиката, выполняются действия с символами.
+     * С помощью метода избавимся от копирования кода.
+     * В дальнейшем, просто будем вызывать метод и в параметры указывать
+     * нужные нам предикаты.
+     * Шаблон стратегия.
+     * @param predicate условие фильтрации
+     * @return строки контента
+     */
+    private String content(Predicate<Character> predicate) {
         StringBuilder output = new StringBuilder();
         try {
             BufferedInputStream inputStream = new BufferedInputStream(new FileInputStream(file));
