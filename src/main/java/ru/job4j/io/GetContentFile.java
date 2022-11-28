@@ -27,11 +27,11 @@ public final class GetContentFile {
         return output.toString();
 
     }
-  /**
+
     public synchronized String getContent() {
-        return content(character -> { });
+        return content(character -> true);
     }
-*/
+
     public synchronized String getContentWithoutUnicode() {
         return content(character -> character < 0x80);
     }
