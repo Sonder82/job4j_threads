@@ -21,12 +21,7 @@ public class AccountStorage {
      * @return результат добавления в виде "boolean" логики
      */
     public synchronized boolean add(Account account) {
-        boolean rsl = false;
-        if (getById(account.getId()).isEmpty()) {
-            rsl = true;
-            accounts.put(account.getId(), account);
-        }
-        return rsl;
+        return accounts.putIfAbsent(account.id(), account) != null;
     }
 
     /**
@@ -36,12 +31,7 @@ public class AccountStorage {
      * @return результат обновления в виде "boolean" логики
      */
     public synchronized boolean update(Account account) {
-        boolean rsl = false;
-        if (getById(account.getId()).isPresent()) {
-            rsl = true;
-            accounts.put(account.getId(), account);
-        }
-        return rsl;
+        return accounts.replace(account.id(), account) != null;
     }
 
     /**
@@ -51,12 +41,7 @@ public class AccountStorage {
      * @return результат удаления в виде "boolean" логики
      */
     public synchronized boolean delete(int id) {
-        boolean rsl = false;
-        if (getById(id).isPresent()) {
-            rsl = true;
-            accounts.remove(id);
-        }
-        return rsl;
+        return accounts.remove(accounts.get(id).id()) != null;
     }
 
     /**
@@ -66,9 +51,7 @@ public class AccountStorage {
      * @return объект Account
      */
     public synchronized Optional<Account> getById(int id) {
-        return accounts.values().stream()
-                .filter(account -> account.getId() == id)
-                .findFirst();
+        return Optional.ofNullable(accounts.get(id));
     }
 
     /**
@@ -84,10 +67,10 @@ public class AccountStorage {
         Optional<Account> source = getById(fromId);
         Optional<Account> dest = getById(toId);
         if (source.isPresent() && dest.isPresent()
-                && source.get().getAmount() >= amount) {
+                && source.get().amount() >= amount) {
             rsl = true;
-            source.get().setAmount(source.get().getAmount() - amount);
-            dest.get().setAmount(dest.get().getAmount() + amount);
+            update(new Account(fromId, source.get().amount() - amount));
+            update(new Account(toId, dest.get().amount() + amount));
         }
         return rsl;
     }
