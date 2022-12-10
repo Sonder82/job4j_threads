@@ -26,6 +26,7 @@ public class Cache {
         return memory.putIfAbsent(model.getId(), model) == null;
     }
 
+    /**
     public boolean update(Base model) {
 
         return memory.computeIfPresent(model.getId(), (key, value) -> {
@@ -41,7 +42,7 @@ public class Cache {
         }) != null;
 
     }
-
+*/
     /**
      * Метод удаляет данные из памяти
      *
