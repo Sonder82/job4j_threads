@@ -20,29 +20,32 @@ public class Cache {
      * Метод добавляет данные в память(memory).
      *
      * @param model данные
-     * @return "булеву" логику при добавлении данных в память.
+     * @return "boolean" логику при добавлении данных в память.
      */
     public boolean add(Base model) {
         return memory.putIfAbsent(model.getId(), model) == null;
     }
 
     /**
+     * Метод обновляет данные модели.
+     * Перед обновлением проверяем version модели и в кеше.
+     * Обновлять только в случае равных version.
+     * При обновлении увеличиваем version в кеше на единицу.
+     * @param model модель
+     * @return "boolean" логику при обновлении данных в памяти.
+     */
     public boolean update(Base model) {
 
         return memory.computeIfPresent(model.getId(), (key, value) -> {
-            Base stored = memory.get(model.getId());
-            if (stored.getVersion() != model.getVersion()) {
-                try {
+            if (value.getVersion() != model.getVersion()) {
                     throw new OptimisticException("Versions are not equal");
-                } catch (OptimisticException e) {
-                    e.printStackTrace();
-                }
             }
-            return model;
+            Base updated = new Base(model.getId(), value.getVersion() + 1);
+            updated.setName(model.getName());
+            return updated;
         }) != null;
-
     }
-*/
+
     /**
      * Метод удаляет данные из памяти
      *
