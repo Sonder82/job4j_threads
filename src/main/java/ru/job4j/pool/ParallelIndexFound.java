@@ -1,6 +1,5 @@
 package ru.job4j.pool;
 
-import java.util.Arrays;
 import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.ForkJoinTask;
 import java.util.concurrent.RecursiveTask;
@@ -63,10 +62,19 @@ public class ParallelIndexFound<T> extends RecursiveTask<Integer> {
 
     /**
      * Метод выполняет линейный поиск индекса элемента в массиве.
+     * Воспользуемся циклом, чтобы искать в заданном диапазоне
+     * {@link ParallelIndexFound#from} {@link ParallelIndexFound#to}
      * @return индекс элемента.
      */
-    protected Integer computeDirectly() {
-        return Arrays.asList(array).indexOf(element);
+    private Integer computeDirectly() {
+        int result = -1;
+        for (int index = from; index <= to; index++) {
+            if (array[index].equals(element)) {
+                result = index;
+                break;
+            }
+        }
+        return result;
     }
 
     /**
