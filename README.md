@@ -12,3 +12,6 @@ Wait, Notify, NotifyAll: управление нитью через wait.
 Non Blocking Algorithm: CAS - операции.
 
 Пулы: ThreadSafe Singleton, ForkJoinPool, CompletableFuture.
+
+"В курсе производилась работа с ветками git."
+
