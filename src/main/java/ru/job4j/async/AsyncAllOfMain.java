@@ -19,7 +19,7 @@ public class AsyncAllOfMain {
     public static void allOfExample() throws InterruptedException {
         CompletableFuture<Void> all = CompletableFuture.allOf(
                 washHands("Папа"), washHands("Мама"),
-                washHands("Ваня"), washHands("Боря")
+                washHands("Иван"), washHands("Боря")
         );
         TimeUnit.SECONDS.sleep(3);
     }
