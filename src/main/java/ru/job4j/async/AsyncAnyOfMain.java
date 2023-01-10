@@ -20,7 +20,7 @@ public class AsyncAnyOfMain {
     public static void anyOfExample() throws InterruptedException, ExecutionException {
         CompletableFuture<Object> first = CompletableFuture.anyOf(
                 whoWashHands("Папа"), whoWashHands("Мама"),
-                whoWashHands("Ваня"), whoWashHands("Борис")
+                whoWashHands("Ваня"), whoWashHands("Боря")
         );
         System.out.println("Кто сейчас моет руки?");
         TimeUnit.SECONDS.sleep(3);
